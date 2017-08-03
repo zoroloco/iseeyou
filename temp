@@ -1,0 +1,17 @@
+pir_state = GPIO.input(FRONT_PIR)
+      if pir_state == True and capturing == False :
+          capturing = True
+          logging.info("Motion detected!")
+
+          #fileName = destPath+time.strftime("%Y%m%d-%H%M%S")+".h264"
+          #camera.start_recording(fileName)
+          #camera.wait_recording(6)
+          fileName = destPath+time.strftime("%Y%m%d-%H%M%S")+".jpg"
+          camera.capture(fileName)
+          time.sleep(3)
+      else :
+          if capturing == True:
+              logging.info("Motion stopped.")
+              capturing = False
+              #camera.stop_recording()
+              #camera.close()
