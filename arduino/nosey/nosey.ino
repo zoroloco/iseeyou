@@ -2,24 +2,31 @@
 #include<SimpleServo.h>
 #include<Servo.h>
 
-//digital pins
 //servos
-const int pin       = 9;
-const int pin2      = 10;
+SimpleServo panServo;
+SimpleServo tiltServo;
+//digital pins
+const int pan       = 9;
+const int tilt      = 10;
 const int centerPir = 5;
 const int leftPir   = 7;
 const int rightPir  = 12;
+//globals
+int calibrationTime = 5;//use 30
+const byte numChars = 32;
+const int servoSpeed= 8;//1-10 range
+bool  newDataFlag   = false;
 
-//the time we give the sensor to calibrate (10-60 secs according to the datasheet)
-int calibrationTime = 3;//use 30        
+bool centerStart = false;
+bool centerStop  = true;
+bool leftStart   = false;
+bool leftStop    = true;
+bool rightStart  = false;
+bool rightStop   = true;
 
-SimpleServo myServo;
-SimpleServo myServo2;
-
-const byte numChars      = 32;
-bool  newDataFlag        = false;
 char receivedChars[numChars];
 
+//do some init
 void setup()
 {
   //serial setup
@@ -33,11 +40,11 @@ void setup()
   digitalWrite(centerPir, LOW);
 
   //servo setup
-  myServo.attachPin(pin);
-  myServo.setSpeed(8);
+  panServo.attachPin(pan);
+  panServo.setSpeed(servoSpeed);
 
-  myServo2.attachPin(pin2);
-  myServo2.setSpeed(8);
+  tiltServo.attachPin(tilt);
+  tiltServo.setSpeed(servoSpeed);
 
   //give the sensor some time to calibrate
   Serial.print("calibrating sensor ");
@@ -50,15 +57,82 @@ void setup()
     delay(50);
 }
 
-void loop()
-{
-  if(digitalRead(centerPir) == LOW){
-    Serial.println("CENTER");
+void wake(){
+  panServo.move(90);
+  tiltServo.move(90);
+}
+
+void moveLeft(){
+  panServo.move(0);
+  tiltServo.move(90);
+}
+
+void moveRight(){
+  panServo.move(180);
+  tiltServo.move(90);
+}
+
+void moveCenter(){
+  panServo.move(90);
+  tiltServo.move(0);
+}
+
+void processMotion(){
+
+  //CENTER
+  if(digitalRead(centerPir) == HIGH){
+    if(!centerStart){
+      centerStart=true;
+      centerStop = false;
+      Serial.println("CENTER_START");
+    }
   }
   else{
-    Serial.println("LOW");
+    if(!centerStop){
+      centerStop=true;
+      centerStart=false;
+      Serial.println("CENTER_STOP");
+    }
   }
   
+  //LEFT
+  if(digitalRead(leftPir) == HIGH){
+    if(!leftStart){
+      leftStart=true;
+      leftStop=false;
+      Serial.println("LEFT_START");
+    }
+  }
+  else{
+    if(!leftStop){
+      leftStop=true;
+      leftStart=false;
+      Serial.println("LEFT_STOP");
+    }
+  }
+  
+  //RIGHT
+  if(digitalRead(rightPir) == HIGH){
+    if(!rightStart){
+      rightStart=true;
+      rightStop=false;
+      Serial.println("RIGHT_START");
+    }
+  }
+  else{
+    if(!rightStop){
+      rightStop=true;
+      rightStart=false;
+      Serial.println("RIGHT_STOP");
+    }
+  }
+}
+
+void loop()
+{
+  processMotion();
+
+  //OVERRIDE SERVO MOVEMENT VIA SERIAL-IN
   rxData();
   if(newDataFlag){
      bool servoFlag     = false;
@@ -66,16 +140,16 @@ void loop()
 
      char * seg = strtok(receivedChars,":");
      int i = 0;
-
+     //Index 0=pin designation. Index 1=command.
      while (seg != NULL)
      {
-       if(i==0){//what pin?
+       if(i==0){
            if(isNumeric(seg)){
              switch(atoi(seg)){
-              case pin:
+              case pan:
                 servoFlag = true;
                 break;
-              case pin2:
+              case tilt:
                 servo2Flag = true;
                 break;
               default:
@@ -85,10 +159,10 @@ void loop()
         }
         else if(i==1){//do something
           if(servoFlag){
-            myServo.setAngle(atoi(seg));
+            panServo.setAngle(atoi(seg));
           }
           else if(servo2Flag){
-            myServo2.setAngle(atoi(seg));
+            tiltServo.setAngle(atoi(seg));
           }
         }
 
@@ -99,8 +173,8 @@ void loop()
      newDataFlag = false;//reset
   }
 
-  myServo.move();
-  myServo2.move();
+  panServo.move();
+  tiltServo.move();
 }
 
 void rxData() {
@@ -139,9 +213,7 @@ bool isNumeric(char *string)
             isNumeric = false;
             break;
         }
-
         iteration++;
-
     }
 
     return isNumeric;
