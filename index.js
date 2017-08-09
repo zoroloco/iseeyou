@@ -1,6 +1,7 @@
-var nodatron = require('./node_modules/nodatron/lib/nodatron.js'),
-    pathUtil = require('path'),
+
+var pathUtil = require('path'),
     _        = require('underscore'),
+    nodatron = require(pathUtil.join(__dirname,'./nodatron/nodatron.js')),
     log      = require(pathUtil.join(__dirname,'./logger.js')),
     cp       = require('child_process');
 
@@ -11,6 +12,7 @@ var arduino = new nodatron({"device"  : "arduino",
 arduino.enableConsole();
 
 arduino.on("connected", function(){
+
   var motionSensorFront = arduino.createPir(5);
   var motionSensorLeft  = arduino.createPir(12);
   var motionSensorRight = arduino.createPir(7);

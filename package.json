@@ -1,7 +1,7 @@
 {
   "name": "iseeyou",
   "version": "1.0.0",
-  "description": "robo",
+  "description": "Robot made with actobotics,arduino,rpi zero,2 servos.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,9 +14,8 @@
     "robot","arduino","raspberry pi zero","servos"
   ],
   "dependencies": {
-    "winston": "^2.1.1",
-    "underscore": "^1.8.3",
-    "nodatron"  : "^2.0.0"
+    "winston": "latest",
+    "underscore": "latest",
   },
   "author": "kenneth centurion",
   "license": "ISC",
