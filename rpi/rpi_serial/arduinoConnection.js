@@ -2,7 +2,7 @@ var cp          = require('child_process'),
     pathUtil    = require('path'),
     _           = require('underscore'),
     dataHandler = require(pathUtil.join(__dirname,'./arduinoDataHandler.js')),
-    log         = require(pathUtil.join(__dirname,'../logger.js'));
+    log         = require(pathUtil.join(__dirname,'../../logger.js'));
 
 function Arduino(device,baud){
 	var self                 = this;

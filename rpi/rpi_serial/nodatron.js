@@ -17,7 +17,7 @@ var pathUtil = require('path'),
     pir      = require(pathUtil.join(__dirname,'./components/pir.js')),
     servo    = require(pathUtil.join(__dirname,'./components/servo.js')),
     emic     = require(pathUtil.join(__dirname,'./components/emicToSpeech.js')),
-    log      = require(pathUtil.join(__dirname,'../logger.js'));
+    log      = require(pathUtil.join(__dirname,'../../logger.js'));
 
 const readline = require('readline');
 

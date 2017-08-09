@@ -1,7 +1,7 @@
 var pathUtil = require('path'),
     events   = require('events'),
     util     = require('util'),
-    log      = require(pathUtil.join(__dirname,'../logger.js'));
+    log      = require(pathUtil.join(__dirname,'../../logger.js'));
 
 module.exports = DataHandler;
 

@@ -79,51 +79,62 @@ void processMotion(){
     if(!centerStart){
       centerStart=true;
       centerStop = false;
-      //moveCenter();
-      Serial.println("CENTER_START");
+      sendMotionStart(centerPir);
     }
   }
   else{
     if(!centerStop){
       centerStop=true;
       centerStart=false;
-      Serial.println("CENTER_STOP");
+      sendMotionStop(centerPir);
     }
   }
-  
+
   //LEFT
   if(digitalRead(leftPir) == HIGH){
     if(!leftStart){
       leftStart=true;
       leftStop=false;
-      //moveLeft();
-      Serial.println("LEFT_START");
+      sendMotionStart(leftPir);
     }
   }
   else{
     if(!leftStop){
       leftStop=true;
       leftStart=false;
-      Serial.println("LEFT_STOP");
+      sendMotionStop(leftPir);
     }
   }
-  
+
   //RIGHT
   if(digitalRead(rightPir) == HIGH){
     if(!rightStart){
       rightStart=true;
       rightStop=false;
-      //moveRight();
-      Serial.println("RIGHT_START");
+      sendMotionStart(rightPir);
     }
   }
   else{
     if(!rightStop){
       rightStop=true;
       rightStart=false;
-      Serial.println("RIGHT_STOP");
+      sendMotionStop(rightPir);
     }
   }
+}
+
+void sendMotionStart(int pin){
+  String msg = "{";
+  msg.concat(pin);
+  msg.concat(":1}");
+  Serial.println(msg);
+}
+
+void sendMotionStop(int pin){
+  String msg = "{";
+  msg.concat(pin);
+  msg.concat(":0}");
+  Serial.println(msg);
 }
 
 void loop()
@@ -216,4 +227,3 @@ bool isNumeric(char *string)
 
     return isNumeric;
 }
-

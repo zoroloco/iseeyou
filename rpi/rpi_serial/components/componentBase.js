@@ -1,7 +1,7 @@
 var pathUtil = require('path'),
     util     = require("util"),
     events   = require('events'),
-		log      = require(pathUtil.join(__dirname,'../../logger.js'));
+		log      = require(pathUtil.join(__dirname,'../../../logger.js'));
 
 module.exports = ComponentBase;
 

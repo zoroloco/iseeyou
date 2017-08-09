@@ -1,7 +1,7 @@
 
 var pathUtil = require('path'),
     _        = require('underscore'),
-    nodatron = require(pathUtil.join(__dirname,'./nodatron/nodatron.js')),
+    nodatron = require(pathUtil.join(__dirname,'./rpi/rpi_serial/nodatron.js')),
     log      = require(pathUtil.join(__dirname,'./logger.js')),
     cp       = require('child_process');
 
@@ -20,26 +20,30 @@ arduino.on("connected", function(){
   var camServo          = arduino.createServo(10);
 
   motionSensorFront.on('start',function(){
+    log.info("Front sensor motion detected.");
     panCenter();
   });
 
   motionSensorFront.on('stop',function(){
-
+    log.info("Front sensor motion stopped.");
   });
 
   motionSensorLeft.on('start',function(){
+    log.info("Left sensor motion detected.");
     panLeft();
   });
 
   motionSensorLeft.on('stop',function(){
-
+    log.info("Left sensor motion stopped.");
   });
 
   motionSensorRight.on('start',function(){
-      panRight();
+    log.info("Right sensor motion detected.");
+    panRight();
   });
 
   motionSensorRight.on('stop',function(){
+    log.info("Right sensor motion stopped.");
     motionLed.stopBlink();
   });
 
@@ -64,21 +68,6 @@ arduino.on("connected", function(){
     camServo.move(0);
   }
 
-  function executeCommand(cmd,cb){
-    var child = cp.exec(cmd ,function(error,stdout,stderr){
-      if (stderr){
-        cb(false,"Error executing command "+cmd+" with stderr:"+stderr);
-      }
-      if (error) {
-        cb(false,"Error executing command "+cmd+" with error:"+error);
-      }
-      if(stdout){
-        cb(true,cmd+" successfully executed with no errors.",stdout);
-      }
-    });
-  }
-
-
   //define handlers for this main process.
   process.on('SIGTERM', function() {//called from /etc/init.d/nodatron.sh from kill pid
     log.info("Got kill signal. Exiting.");
@@ -91,7 +80,7 @@ arduino.on("connected", function(){
   });
 
   process.on('exit', function(){
-    log.info("raspatron exiting...");
+    log.info("Nosey exiting...");
   })
 
   process.on('uncaughtException', function (err) {
@@ -108,7 +97,6 @@ arduino.on("connected", function(){
   function shutdown(){
     arduino.shutdown();
     log.info("Arduino serial connection shut down.");
-
     process.exit();
   }
 

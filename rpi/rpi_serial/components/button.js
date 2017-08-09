@@ -2,7 +2,7 @@ var pathUtil      = require('path'),
     util          = require("util"),
     _             = require("underscore"),
     ComponentBase = require(pathUtil.join(__dirname,'./componentBase.js')),
-    log           = require(pathUtil.join(__dirname,'../../logger.js'));
+    log           = require(pathUtil.join(__dirname,'../../../logger.js'));
 
 module.exports = Button;
 
