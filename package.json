@@ -1,0 +1,27 @@
+{
+  "name": "iseeyou",
+  "version": "1.0.0",
+  "description": "robo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zoroloco/iseeyou.git"
+  },
+  "keywords": [
+    "robot","arduino","raspberry pi zero","servos"
+  ],
+  "dependencies": {
+    "winston": "^2.1.1",
+    "underscore": "^1.8.3",
+    "nodatron"  : "^2.0.0"
+  },
+  "author": "kenneth centurion",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zoroloco/iseeyou/issues"
+  },
+  "homepage": "https://github.com/zoroloco/iseeyou#readme"
+}

@@ -57,24 +57,19 @@ void setup()
     delay(50);
 }
 
-void wake(){
-  panServo.move(90);
-  tiltServo.move(90);
-}
-
 void moveLeft(){
-  panServo.move(0);
-  tiltServo.move(90);
+  panServo.setAngle(0);
+  tiltServo.setAngle(90);
 }
 
 void moveRight(){
-  panServo.move(180);
-  tiltServo.move(90);
+  panServo.setAngle(180);
+  tiltServo.setAngle(90);
 }
 
 void moveCenter(){
-  panServo.move(90);
-  tiltServo.move(0);
+  panServo.setAngle(90);
+  tiltServo.setAngle(90);
 }
 
 void processMotion(){
@@ -84,6 +79,7 @@ void processMotion(){
     if(!centerStart){
       centerStart=true;
       centerStop = false;
+      //moveCenter();
       Serial.println("CENTER_START");
     }
   }
@@ -100,6 +96,7 @@ void processMotion(){
     if(!leftStart){
       leftStart=true;
       leftStop=false;
+      //moveLeft();
       Serial.println("LEFT_START");
     }
   }
@@ -116,6 +113,7 @@ void processMotion(){
     if(!rightStart){
       rightStart=true;
       rightStop=false;
+      //moveRight();
       Serial.println("RIGHT_START");
     }
   }
@@ -175,7 +173,7 @@ void loop()
 
   panServo.move();
   tiltServo.move();
-}
+}//loop
 
 void rxData() {
         static byte ndx = 0;
@@ -218,3 +216,4 @@ bool isNumeric(char *string)
 
     return isNumeric;
 }
+
