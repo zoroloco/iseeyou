@@ -2,12 +2,15 @@
 var pathUtil = require('path'),
     _        = require('underscore'),
     nodatron = require(pathUtil.join(__dirname,'./rpi/rpi_serial/nodatron.js')),
+    camera   = require(pathUtil.join(__dirname,'./rpi/rpi_camera/cameraConnection.js')),
     log      = require(pathUtil.join(__dirname,'./logger.js')),
     cp       = require('child_process');
 
 var arduino = new nodatron({"device"  : "arduino",
                             "devPath" : "/dev/ttyACM0",
                             "baud"    : 9600});
+var cam     = new camera();
+
 
 arduino.enableConsole();
 
@@ -44,7 +47,6 @@ arduino.on("connected", function(){
 
   motionSensorRight.on('stop',function(){
     log.info("Right sensor motion stopped.");
-    motionLed.stopBlink();
   });
 
   function panLeft(){
