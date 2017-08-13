@@ -17,8 +17,8 @@ arduino.enableConsole();
 arduino.on("connected", function(){
 
   var motionSensorFront = arduino.createPir(5);
-  var motionSensorLeft  = arduino.createPir(12);
-  var motionSensorRight = arduino.createPir(7);
+  var motionSensorLeft  = arduino.createPir(7);
+  var motionSensorRight = arduino.createPir(12);
   var baseServo         = arduino.createServo(9);
   var camServo          = arduino.createServo(10);
 
@@ -51,22 +51,22 @@ arduino.on("connected", function(){
 
   function panLeft(){
     baseServo.move(180);
-    camServo.move(85);
+    camServo.move(90);
   }
 
   function panRight(){
-    baseServo.move(33);
-    camServo.move(85);
+    baseServo.move(0);
+    camServo.move(90);
   }
 
   function panCenter(){
-    baseServo.move(110);
-    camServo.move(85);
+    baseServo.move(90);
+    camServo.move(90);
   }
 
   //move camera to a rest position.
   function sleepCam(){
-    baseServo.move(110);
+    baseServo.move(0);
     camServo.move(0);
   }
 
