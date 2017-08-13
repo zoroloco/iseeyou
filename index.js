@@ -9,7 +9,7 @@ var pathUtil = require('path'),
 var arduino = new nodatron({"device"  : "arduino",
                             "devPath" : "/dev/ttyACM0",
                             "baud"    : 9600});
-var cam     = new camera();
+//var cam     = new camera();
 
 
 arduino.enableConsole();
