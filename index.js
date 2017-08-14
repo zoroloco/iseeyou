@@ -1,7 +1,7 @@
 
 var pathUtil = require('path'),
     _        = require('underscore'),
-    nodatron = require('nodatron')),
+    nodatron = require('nodatron'),
     camera   = require(pathUtil.join(__dirname,'./rpi/rpi_camera/cameraConnection.js')),
     log      = require(pathUtil.join(__dirname,'./logger.js')),
     cp       = require('child_process');
