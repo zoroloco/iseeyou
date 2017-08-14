@@ -16,6 +16,7 @@
   "dependencies": {
     "winston": "latest",
     "underscore": "latest",
+    "nodatron" : "latest"
   },
   "author": "kenneth centurion",
   "license": "ISC",

@@ -1,16 +1,22 @@
 
 var pathUtil = require('path'),
     _        = require('underscore'),
-    nodatron = require(pathUtil.join(__dirname,'./rpi/rpi_serial/nodatron.js')),
+    nodatron = require('nodatron')),
     camera   = require(pathUtil.join(__dirname,'./rpi/rpi_camera/cameraConnection.js')),
     log      = require(pathUtil.join(__dirname,'./logger.js')),
     cp       = require('child_process');
 
-var arduino = new nodatron({"device"  : "arduino",
-                            "devPath" : "/dev/ttyACM0",
+var arduino = new nodatron({"devPath" : "/dev/ttyACM0",
                             "baud"    : 9600});
 //var cam     = new camera();
 
+/*
+if center triggered then left stopped but center still active, then
+go back to center.
+
+set flags to detect all motion stopped so you can sleep.
+
+*/
 
 arduino.enableConsole();
 
@@ -102,4 +108,8 @@ arduino.on("connected", function(){
     process.exit();
   }
 
+});
+
+arduino.on("serialLostConnection", function(msg){
+  log.error(msg);
 });
