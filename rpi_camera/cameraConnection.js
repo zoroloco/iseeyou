@@ -10,7 +10,7 @@ function Camera(){
   this._iseeyou            = null;
   events.EventEmitter.call(this);
 
-  this._iseeyou = cp.spawn('python iseeyou.py');
+  this._iseeyou = cp.spawn('python',['iseeyou.py']);
 
   this._iseeyou.stdin.setEncoding('utf-8');
 
@@ -34,7 +34,7 @@ function Camera(){
       self.emit("error");
   });
   */
-  
+
   this._iseeyou.on('close', (code) => {
       self.emit("close");
       //onDisconnected("Camera connection closed.");
