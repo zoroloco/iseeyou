@@ -28,12 +28,10 @@ function Camera(){
       self.emit("error");
   });
 
-  /*
   this._iseeyou.on('error', (err) => {
       //onDisconnected("error on camera connection:"+err);
       self.emit("error");
   });
-  */
 
   this._iseeyou.on('close', (code) => {
       self.emit("close");

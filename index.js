@@ -8,7 +8,6 @@ var pathUtil = require('path'),
 
 var arduino = new nodatron({"devPath" : "/dev/ttyACM0",
                             "baud"    : 9600});
-var cam     = new camera();
 
 /*
 if center triggered then left stopped but center still active, then
@@ -27,6 +26,8 @@ arduino.on("connected", function(){
   var motionSensorRight = arduino.createPir(12);
   var baseServo         = arduino.createServo(9);
   var camServo          = arduino.createServo(10);
+
+  var cam               = new camera();
 
   motionSensorFront.on('start',function(){
     log.info("Front sensor motion detected.");
