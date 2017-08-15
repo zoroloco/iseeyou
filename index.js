@@ -2,13 +2,13 @@
 var pathUtil = require('path'),
     _        = require('underscore'),
     nodatron = require('nodatron'),
-    //camera   = require(pathUtil.join(__dirname,'./rpi/rpi_camera/cameraConnection.js')),
+    camera   = require(pathUtil.join(__dirname,'./rpi_camera/cameraConnection.js')),
     log      = require(pathUtil.join(__dirname,'./logger.js')),
     cp       = require('child_process');
 
 var arduino = new nodatron({"devPath" : "/dev/ttyACM0",
                             "baud"    : 9600});
-//var cam     = new camera();
+var cam     = new camera();
 
 /*
 if center triggered then left stopped but center still active, then
@@ -89,7 +89,7 @@ arduino.on("connected", function(){
 
   process.on('exit', function(){
     log.info("Nosey exiting...");
-  })
+  });
 
   process.on('uncaughtException', function (err) {
     var msg="Uncaught Exception ";
@@ -112,4 +112,15 @@ arduino.on("connected", function(){
 
 arduino.on("serialLostConnection", function(msg){
   log.error(msg);
+});
+
+process.on('uncaughtException', function (err) {
+  var msg="Uncaught Exception ";
+  if( err.name === 'AssertionError' ) {
+    msg += err.message;
+  } else {
+    msg += err;
+  }
+  console.error(msg);
+  process.exit(1);
 });
