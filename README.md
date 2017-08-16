@@ -5,6 +5,7 @@ on an arduino controlled via python on a Raspberry Pi zero w.
 This uses the nodatron library.
 
 pip install piserial
+apt-get install picamera
 npm install
 compile and upload your sketch to your Arduino  
 npm start

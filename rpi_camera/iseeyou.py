@@ -39,14 +39,13 @@ with picamera.PiCamera() as camera:
         capturing = False
         os.chdir(cwd)
         initCamera(camera)
-
-        while True:
-            cmd = sys.stdin.readline()
-            #captureImage(camera,"1.png")
-            sendMessage(cmd);#echo back
-
     except BaseException:
         sendMessage("ERROR: unhandled exception")
     finally:
         sendMessage("QUITTING")
         camera.close()
+
+    while True:
+        cmd = sys.stdin.readline()
+        #captureImage(camera,"1.png")
+        sendMessage(cmd);#echo back
