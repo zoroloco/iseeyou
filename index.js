@@ -32,6 +32,10 @@ arduino.on("connected", function(){
   var left              = false;
   var right             = false;
 
+  cam.on('imageTaken',function(msg){
+    log.info("Image taken event:"+msg);
+  });
+
   motionSensorFront.on('start',function(){
     log.info("Front sensor motion detected.");
     front = true;
@@ -95,6 +99,7 @@ arduino.on("connected", function(){
   function run(){
     if(!front && !left && !right){
       sleepCam();
+      cam.sendCommand("sleepy");
     }
   }
 

@@ -21,7 +21,7 @@ function Camera(){
       var dataStr    = data.toString('ascii');
       log.error("Received data from camera: "+data);
       //onReceiveData(dataStr);
-      //self.emit("imageTaken")
+      self.emit("imageTaken",dataStr);
     }
   });
 
