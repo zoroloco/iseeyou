@@ -18,27 +18,32 @@ function Camera(){
   this._iseeyou.stdout.on('data', (data) => {
     if(Buffer.isBuffer(data)){
       var dataStr    = data.toString('ascii');
+      log.error("Received data from camera: "+data);
       //onReceiveData(dataStr);
       //self.emit("imageTaken")
     }
   });
 
   this._iseeyou.stderr.on('data', (data) => {
-      //onDisconnected("stderr on camera connection:"+data);
-      self.emit("error");
+    log.error("Received error from camera: "+data);
+    //onDisconnected("stderr on camera connection:"+data);
+    self.emit("error");
   });
 
   this._iseeyou.on('error', (err) => {
-      //onDisconnected("error on camera connection:"+err);
-      self.emit("error");
+    log.error(err);
+    //onDisconnected("error on camera connection:"+err);
+    self.emit("error");
   });
 
   this._iseeyou.on('close', (code) => {
-      self.emit("close");
+    log.error("Received close event from camera: "+code);
+    self.emit("close");
       //onDisconnected("Camera connection closed.");
   });
 
   this._iseeyou.on('exit', (code) => {
+    log.error("Received exit event from camera: "+code);
     self.emit("exit");
     //onDisconnected("Camera connection exited.");
   });
@@ -54,7 +59,7 @@ function Camera(){
 	Camera.prototype.sendCommand = function(cmd){
     log.info("Camera client received message:"+cmd);
 		if(!_.isEmpty(self._iseeyou)){
-      log.info("Camera client now sending:"+cmd);
+      log.info("Camera client now sending message:"+cmd);
 			this._iseeyou.stdin.write(cmd);//just send down raw
 		}
     else{
