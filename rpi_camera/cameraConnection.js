@@ -9,8 +9,8 @@ function Camera(){
 	var self                 = this;
   this._iseeyou            = null;
   events.EventEmitter.call(this);
-
-  this._iseeyou = cp.spawn('python',['iseeyou.py']);
+  var cmd                  = pathUtil.join(__dirname,"iseeyou.py");
+  this._iseeyou = cp.spawn('python',[cmd]);
 
   this._iseeyou.stdin.setEncoding('utf-8');
 
