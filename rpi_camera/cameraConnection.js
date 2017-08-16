@@ -10,6 +10,7 @@ function Camera(){
   this._iseeyou            = null;
   events.EventEmitter.call(this);
   var cmd                  = pathUtil.join(__dirname,"iseeyou.py");
+  log.info("Attempting to spawn: "+cmd);
   this._iseeyou = cp.spawn('python',[cmd]);
 
   this._iseeyou.stdin.setEncoding('utf-8');
