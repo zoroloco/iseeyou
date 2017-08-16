@@ -1,6 +1,5 @@
 
 import picamera
-import logging
 import os
 import sys
 import time
@@ -8,7 +7,6 @@ import time
 cwd = "/usr/local/src/iseeyou"
 
 def initCamera(camera):
-    logging.info("Initializing camera.")
     #camera settings
     #camera.resolution            = (SCREEN_WIDTH, SCREEN_HEIGHT)
     camera.framerate             = 24

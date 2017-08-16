@@ -27,33 +27,48 @@ arduino.on("connected", function(){
   var baseServo         = arduino.createServo(9);
   var camServo          = arduino.createServo(10);
 
-  var cam               = new camera();
+  //var cam               = new camera();
+  var front             = false;
+  var left              = false;
+  var right             = false;
 
   motionSensorFront.on('start',function(){
     log.info("Front sensor motion detected.");
+    front = true;
     panCenter();
+    run();
   });
 
   motionSensorFront.on('stop',function(){
     log.info("Front sensor motion stopped.");
+    front = false;
+    run();
   });
 
   motionSensorLeft.on('start',function(){
     log.info("Left sensor motion detected.");
+    left = true;
     panLeft();
+    run();
   });
 
   motionSensorLeft.on('stop',function(){
+    left = false;
     log.info("Left sensor motion stopped.");
+    run();
   });
 
   motionSensorRight.on('start',function(){
     log.info("Right sensor motion detected.");
+    right = true;
     panRight();
+    run();
   });
 
   motionSensorRight.on('stop',function(){
+    right = false;
     log.info("Right sensor motion stopped.");
+    run();
   });
 
   function panLeft(){
@@ -77,6 +92,12 @@ arduino.on("connected", function(){
     camServo.move(0);
   }
 
+  function run(){
+    if(!front && !left && !right){
+      sleepCam();
+    }
+  }
+
   //define handlers for this main process.
   process.on('SIGTERM', function() {//called from /etc/init.d/nodatron.sh from kill pid
     log.info("Got kill signal. Exiting.");
@@ -89,7 +110,7 @@ arduino.on("connected", function(){
   });
 
   process.on('exit', function(){
-    log.info("Nosey exiting...");
+    log.info("iseeyou exiting...");
   });
 
   process.on('uncaughtException', function (err) {
