@@ -27,7 +27,7 @@ arduino.on("connected", function(){
   var baseServo         = arduino.createServo(9);
   var camServo          = arduino.createServo(10);
 
-  //var cam               = new camera();
+  var cam               = new camera();
   var front             = false;
   var left              = false;
   var right             = false;
@@ -88,7 +88,7 @@ arduino.on("connected", function(){
 
   //move camera to a rest position.
   function sleepCam(){
-    baseServo.move(0);
+    baseServo.move(90);
     camServo.move(0);
   }
 
