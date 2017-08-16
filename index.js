@@ -99,7 +99,7 @@ arduino.on("connected", function(){
   function run(){
     if(!front && !left && !right){
       sleepCam();
-      cam.sendCommand("sleepy");
+      cam.sendCommand("1");
     }
   }
 
