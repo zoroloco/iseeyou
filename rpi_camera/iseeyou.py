@@ -45,7 +45,7 @@ with picamera.PiCamera() as camera:
             if cmd == '1':
                 fileName = time.strftime("%Y%m%d-%H%M%S")+".png"
                 captureImage(camera,fileName)
-                #sendMessage(cmd);#echo back
+                sendMessage("Image captured!");#echo back
     except BaseException:
         sendMessage("ERROR: unhandled exception")
     finally:
