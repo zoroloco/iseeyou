@@ -5,6 +5,7 @@ import sys
 import time
 
 cwd = "/usr/local/src/iseeyou"
+imgDir = "/mnt/security"
 
 def initCamera(camera):
     #camera settings
@@ -32,7 +33,7 @@ def sendMessage(msg):
     sys.stdout.flush()
 
 def captureImage(camera,imageName):
-    camera.capture(imageName)
+    camera.capture(imgDir+"/"+imageName)
 
 with picamera.PiCamera() as camera:
     try:
@@ -41,7 +42,7 @@ with picamera.PiCamera() as camera:
         initCamera(camera)
 
         while True:
-            cmd = sys.stdin.readline()
+            cmd = sys.stdin.read()
             if cmd == "1\n":
                 fileName = time.strftime("%Y%m%d-%H%M%S")+".png"
                 captureImage(camera,fileName)
